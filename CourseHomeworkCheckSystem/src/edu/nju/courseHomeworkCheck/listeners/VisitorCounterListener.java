@@ -26,7 +26,7 @@ public class VisitorCounterListener implements ServletContextListener, ServletCo
 	int counter;
 	int totalCounter;
 	int onlineCounter;
-	String counterFilePath = "E:\\zhangyi\\workplace\\CourseHomeworkCheckSystem\\WebContent\\counter.txt";
+	String counterFilePath = "E:\\work\\git\\courseHomeworkCheckSystem\\CourseHomeworkCheckSystem\\WebContent\\counter.txt";
 //	String counterFilePath = "E:\\zhangyi\\1zy13\\Workplace-j2ee\\CourseHomeworkCheckSystem\\WebContent\\counter.txt";
 	/**
      * Default constructor. 

@@ -125,10 +125,10 @@ public class MyHomework extends HttpServlet {
 			out.println("<th>作业评分</th>");
 			out.println("</tr>");
 			if(list!=null){
-				for (int i = 0; i < list.size(); i++) {
-					Homework hw = list.get(i);
+				for (int i = 1; i <= list.size(); i++) {
+					Homework hw = list.get(i-1);
 					out.println("<tr>");
-					out.println("<td>"+hw.getHomeworkid()+"</td>");
+					out.println("<td>"+i+"</td>");
 					out.println("<td>"+hw.getCourseName()+"</td>");
 					out.println("<td>"+hw.getHomeworkTitle()+"</td>");
 					out.println("<td>"+hw.getDueTime()+"</td>");
@@ -175,10 +175,17 @@ public class MyHomework extends HttpServlet {
 		try {
 			HttpSession session = req.getSession(false);
 			ArrayList<Homework> homeworkList = new ArrayList<Homework>();
-			stmt = connection.prepareStatement("SELECT hw.homeworkid,c.courseName,hw.homeworktitle"
-					+ ",hw.dueTime,hwg.uploadTime,hwg.completition,hwg.grade "
-					+ "FROM homework hw,homeworkgrade hwg,course c "
-					+ "WHERE hwg.studentid=? AND hwg.homeworkid=hw.homeworkid AND c.courseid=hw.courseid");
+			stmt = connection.prepareStatement("SELECT t.homeworkid,t.courseName,t.homeworktitle,t.dueTime,hg.completition,hg.uploadTime,hg.grade "
+					+ "FROM "
+					+ "(SELECT cs.studentid,h.homeworkid,c.courseName, h.homeworktitle,h.dueTime "
+					+ "FROM courseselection cs,homework h,course c "
+					+ "WHERE cs.studentid=? "
+					+ "AND cs.courseid=h.courseid "
+					+ "AND cs.courseid=c.courseid) t LEFT JOIN homeworkgrade hg ON t.homeworkid=hg.homeworkid AND t.studentid=hg.studentid");
+//			stmt = connection.prepareStatement("SELECT hw.homeworkid,c.courseName,hw.homeworktitle"
+//					+ ",hw.dueTime,hwg.uploadTime,hwg.completition,hwg.grade "
+//					+ "FROM homework hw,homeworkgrade hwg,course c "
+//					+ "WHERE hwg.studentid=? AND hwg.homeworkid=hw.homeworkid AND c.courseid=hw.courseid");
 			stmt.setString(1, (String) session.getAttribute("userid"));
 			resultSet = stmt.executeQuery();
 
