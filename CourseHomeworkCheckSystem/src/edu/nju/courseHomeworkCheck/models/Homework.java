@@ -2,7 +2,8 @@ package edu.nju.courseHomeworkCheck.models;
 
 public class Homework {
 	private int homeworkid;
-	private String courseName;
+	private String studentid;
+	private Course course;
 	private String homeworkTitle;
 	private String homeworkContent;
 	private String dueTime;
@@ -16,11 +17,17 @@ public class Homework {
 	public void setHomeworkid(int homeworkid) {
 		this.homeworkid = homeworkid;
 	}
-	public String getCourseName() {
-		return courseName;
+	public String getStudentid() {
+		return studentid;
 	}
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+	public void setStudentid(String studentid) {
+		this.studentid = studentid;
+	}
+	public Course getCourse() {
+		return course;
+	}
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 	public String getHomeworkTitle() {
 		return homeworkTitle;

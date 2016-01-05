@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import edu.nju.courseHomeworkCheck.models.Course;
 import edu.nju.courseHomeworkCheck.models.Homework;
 
 /**
@@ -139,7 +140,7 @@ public class BadHomeworkWarning extends HttpServlet {
 						+ "</tr>");
 				out.println("<tr>"
 						+ "<td>Course Name:</td>"
-						+ "<td>"+hw.getCourseName()+"</td>"
+						+ "<td>"+hw.getCourse().getCourseName()+"</td>"
 						+ "</tr>");
 				out.println("<tr>"
 						+ "<td>Due date:</td>"
@@ -177,7 +178,7 @@ public class BadHomeworkWarning extends HttpServlet {
 						+ "</tr>");
 				out.println("<tr>"
 						+ "<td>Course Name:</td>"
-						+ "<td>"+hw.getCourseName()+"</td>"
+						+ "<td>"+hw.getCourse().getCourseName()+"</td>"
 						+ "</tr>");
 				out.println("<tr>"
 						+ "<td>Due date:</td>"
@@ -239,7 +240,9 @@ public class BadHomeworkWarning extends HttpServlet {
 			while (resultSet.next()) {
 				result = true;
 				Homework work = new Homework();
-				work.setCourseName(resultSet.getString("courseName"));
+				Course c = new Course();
+				c.setCourseName(resultSet.getString("courseName"));
+				work.setCourse(c);
 				work.setHomeworkTitle(resultSet.getString("homeworktitle"));
 				work.setHomeworkContent(resultSet.getString("homeworkContent"));
 				work.setDueTime(resultSet.getString("dueTime"));
@@ -261,7 +264,9 @@ public class BadHomeworkWarning extends HttpServlet {
 			while (resultSet.next()) {
 				result = true;
 				Homework work = new Homework();
-				work.setCourseName(resultSet.getString("courseName"));
+				Course c = new Course();
+				c.setCourseName(resultSet.getString("courseName"));
+				work.setCourse(c);
 				work.setHomeworkContent(resultSet.getString("homeworkContent"));
 				work.setDueTime(resultSet.getString("dueTime"));
 				work.setCompletition(resultSet.getString("completition"));

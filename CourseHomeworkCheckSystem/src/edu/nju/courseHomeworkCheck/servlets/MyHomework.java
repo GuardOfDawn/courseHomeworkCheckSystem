@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import edu.nju.courseHomeworkCheck.models.Course;
 import edu.nju.courseHomeworkCheck.models.Homework;
 
 /**
@@ -129,7 +130,7 @@ public class MyHomework extends HttpServlet {
 					Homework hw = list.get(i-1);
 					out.println("<tr>");
 					out.println("<td>"+i+"</td>");
-					out.println("<td>"+hw.getCourseName()+"</td>");
+					out.println("<td>"+hw.getCourse().getCourseName()+"</td>");
 					out.println("<td>"+hw.getHomeworkTitle()+"</td>");
 					out.println("<td>"+hw.getDueTime()+"</td>");
 					out.println("<td>"+hw.getUploadTime()+"</td>");
@@ -192,7 +193,9 @@ public class MyHomework extends HttpServlet {
 			while (resultSet.next()) {
 				Homework work = new Homework();
 				work.setHomeworkid(resultSet.getInt("homeworkid"));
-				work.setCourseName(resultSet.getString("courseName"));
+				Course c = new Course();
+				c.setCourseName(resultSet.getString("courseName"));
+				work.setCourse(c);
 				work.setHomeworkTitle(resultSet.getString("homeworktitle"));
 				work.setDueTime(resultSet.getString("dueTime"));
 				work.setUploadTime(resultSet.getString("uploadTime"));
