@@ -4,6 +4,7 @@ public class Student {
 	private String studentid;
 	private String nickname;
 	private int age;
+	private int gender;
 	
 	public String getStudentid() {
 		return studentid;
@@ -22,6 +23,12 @@ public class Student {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	public int getGender() {
+		return gender;
+	}
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 	
 }

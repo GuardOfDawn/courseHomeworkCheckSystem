@@ -10,7 +10,11 @@ public interface HomeworkDao {
 
 	public List findUploadConditionByStudent(String studentid);
 	
+	public List findUnUploadByStudent(String studentid);
+	
 	public List findGradeByStudent(String studentid);
+	
+	public List findFailedGradeByStudent(String studentid);
 	
 	public List findByCourse(int courseid);
 	
