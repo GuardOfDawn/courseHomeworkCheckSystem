@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+      <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,8 +9,8 @@
 </head>
 <body bgcolor='#FFFACD'>
 	<p>登录出错!</p>
-	<form method='GET' action='<%=request.getContextPath() + "/jsp/login.jsp"%>'>
-		<input type='submit' name='return' value='重新登录'/>
-	</form>
+	<s:form method='post' action='/Student/login'>
+		<s:submit value="重新登录"/>
+	</s:form>
 </body>
 </html>

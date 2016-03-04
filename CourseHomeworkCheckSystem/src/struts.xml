@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+
+	<package name="struts2" namespace="/Student" extends="struts-default">
+
+
+		<action name="login" class="LoginAction">
+
+			<result name="success">/jsp/workNotice.jsp</result>
+
+			<result name="error">/jsp/loginError.jsp</result>
+			
+			<result name="input">/jsp/login.jsp</result>
+
+		</action>
+		
+		<action name="logout" class="LogoutAction">
+			
+			<result name="success">/jsp/login.jsp</result>
+		
+		</action>
+		
+		<action name="myCourse" class="MyCourseAction">
+			
+			<result name="success">/jsp/myCourses.jsp</result>
+			
+			<result name="input">/jsp/login.jsp</result>
+		
+		</action>
+		
+		<action name="myHomework" class="MyHomeworkAction">
+		
+			<result name="success">/jsp/homeworkUpload.jsp</result>
+			
+			<result name="input">/jsp/login.jsp</result>
+		
+		</action>
+		
+		<action name="myGrade" class="MyGradeAction">
+		
+			<result name="success">/jsp/grade.jsp</result>
+			
+			<result name="input">/jsp/login.jsp</result>
+		
+		</action>
+
+	</package>
+	
+
+</struts>
+

@@ -11,7 +11,7 @@ public class HomeworkListBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@SuppressWarnings("rawtypes")
 	private List homeworkList;
 
@@ -28,5 +28,4 @@ public class HomeworkListBean implements Serializable{
 	public Homework getHomeworkList(int index){
 		return (Homework) homeworkList.get(index);
 	}
-	
 }

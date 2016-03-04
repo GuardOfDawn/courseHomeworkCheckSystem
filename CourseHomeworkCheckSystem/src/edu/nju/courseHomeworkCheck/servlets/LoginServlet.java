@@ -1,6 +1,7 @@
 package edu.nju.courseHomeworkCheck.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -9,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import edu.nju.courseHomeworkCheck.factory.DaoFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import edu.nju.courseHomeworkCheck.models.Student;
+import edu.nju.courseHomeworkCheck.service.StudentManageService;
 
 /**
  * Servlet implementation class LoginServlet
@@ -17,13 +22,18 @@ import edu.nju.courseHomeworkCheck.factory.DaoFactory;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static ApplicationContext appliationContext;
+	private static StudentManageService studentManage;
+
+	//	@EJB StudentManageService studentManage;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
+    	appliationContext=new ClassPathXmlApplicationContext("applicationContext.xml"); 
+        studentManage = (StudentManageService) appliationContext.getBean("StudentManageService");
     }
 
 	/**
@@ -65,12 +75,15 @@ public class LoginServlet extends HttpServlet {
 				}
 
 				// create a session to show that we are logged in
-				boolean loginRes = DaoFactory.getStudentDao()
-						.checkLogin(loginValue,request.getParameter("password"));
+				boolean loginRes = studentManage
+						.Login(loginValue,request.getParameter("password"));
 				if(loginRes){
 					session = request.getSession(true);
 					session.setMaxInactiveInterval(5*60);
 					session.setAttribute("userid", loginValue);
+					Student s = studentManage.findStudent(loginValue);
+					session.setAttribute("gender", s.getGender());
+					session.setAttribute("nickname", s.getNickname());
 					
 					response.sendRedirect(request.getContextPath() + "/WorkNoticeServlet");
 				}

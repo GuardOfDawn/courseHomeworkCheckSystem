@@ -1,11 +1,15 @@
 package edu.nju.courseHomeworkCheck.dao;
 
-import java.util.List;
+import edu.nju.courseHomeworkCheck.models.Student;
 
 public interface StudentDao {
 	
-	public boolean checkLogin(String student,String password);
+	public Student findById(String studentid);
 	
-	public List findById(String studentid);
+	
+	public void save(Student student);
+	
+	
+	public boolean updateStudent(Student student);
 	
 }

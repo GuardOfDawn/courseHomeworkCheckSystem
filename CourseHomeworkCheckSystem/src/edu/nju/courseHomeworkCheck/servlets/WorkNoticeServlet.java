@@ -1,8 +1,6 @@
 package edu.nju.courseHomeworkCheck.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -12,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import edu.nju.courseHomeworkCheck.action.business.HomeworkGradeListBean;
 import edu.nju.courseHomeworkCheck.action.business.HomeworkListBean;
-import edu.nju.courseHomeworkCheck.factory.DaoFactory;
-import edu.nju.courseHomeworkCheck.models.Homework;
+import edu.nju.courseHomeworkCheck.service.HomeworkManageService;
 
 /**
  * Servlet implementation class WorkNoticeServlet
@@ -22,13 +23,18 @@ import edu.nju.courseHomeworkCheck.models.Homework;
 @WebServlet("/WorkNoticeServlet")
 public class WorkNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static ApplicationContext appliationContext;
+	private static HomeworkManageService homeworkManage;
+	
+//	@EJB HomeworkManageService homeworkManage;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public WorkNoticeServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        appliationContext=new ClassPathXmlApplicationContext("applicationContext.xml"); 
+        homeworkManage = (HomeworkManageService) appliationContext.getBean("HomeworkManageService");
     }
 
 	/**
@@ -42,14 +48,14 @@ public class WorkNoticeServlet extends HttpServlet {
 		else{
 			ServletContext context = getServletContext();
 			String studentid = String.valueOf(session.getAttribute("userid"));
-			HomeworkListBean listHomeworkUpload = new HomeworkListBean();
-			listHomeworkUpload.setHomeworkList(DaoFactory.getHomeworkDao().findUnUploadByStudent(studentid));
-			HomeworkListBean listHomeworkGrade = new HomeworkListBean();
-			listHomeworkGrade.setHomeworkList(DaoFactory.getHomeworkDao().findFailedGradeByStudent(studentid));
+			HomeworkListBean listHomeworkUnUpload = new HomeworkListBean();
+			listHomeworkUnUpload.setHomeworkList(homeworkManage.findUnUploadByStudent(studentid));
+			HomeworkGradeListBean listHomeworkFailed = new HomeworkGradeListBean();
+			listHomeworkFailed.setHomeworkGradeList(homeworkManage.findFailedGradeByStudent(studentid));
 			try {
-				request.setAttribute("studentid", studentid);
-				session.setAttribute("listHomeworkUpload", listHomeworkUpload);
-				session.setAttribute("listHomeworkGrade", listHomeworkGrade);
+				request.setAttribute("nickname", session.getAttribute("nickname"));
+				session.setAttribute("listHomeworkUnUpload", listHomeworkUnUpload);
+				session.setAttribute("listHomeworkFailed", listHomeworkFailed);
 				context.getRequestDispatcher("/jsp/workNotice.jsp").forward(
 						request, response);
 			} catch (ServletException e) {
